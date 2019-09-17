@@ -1,6 +1,8 @@
 package Structures;
 
-public class Employee {
+public class Employee implements java.io.Serializable {
+
+	private static final long serialVersionUID = 8993745505444964587L;
 	int empId;
 	String empName;
 	int age;
@@ -8,9 +10,7 @@ public class Employee {
 	String dept;
 	int salary;
 	
-	public Employee() {
-//		System.out.println("Default Constructor Invoked");
-	}
+	public Employee() {}
 	
 	public Employee(int empId, String empName, int age, String desig, String dept, int salary) {
 		super();
