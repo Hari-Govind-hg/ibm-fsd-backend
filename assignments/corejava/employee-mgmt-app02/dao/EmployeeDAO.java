@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Scanner;
 
 import com.Java.Assignment1_jdbc.model.Employee;
 import com.Java.Assignment1_jdbc.services.*;
@@ -19,6 +22,7 @@ public class EmployeeDAO implements IEmployeeDAO{
 		ResultSet rs = null;
 		int flag;
 		HashMap<Integer,Employee> empMap1=new HashMap<Integer,Employee>();
+		Scanner sc = new Scanner(System.in);
 		public EmployeeDAO(){
 			if(flag==0) {
 					try{MysqlDataSource dataSource = new MysqlDataSource();
@@ -113,26 +117,58 @@ public class EmployeeDAO implements IEmployeeDAO{
 
 
 		@Override
-		public HashMap<Integer, Employee> viewAllEmpDb() {
+		public ArrayList<Employee> viewAllEmpDb() {
 			String selectQuery = "Select * FROM employee";
+			ArrayList<Employee> eList = new ArrayList<Employee>();
 			try {
 				pstmt = conn.prepareStatement(selectQuery);
 				rs = pstmt.executeQuery();
-				Employee e = new Employee();
 				while(rs.next())
-				{
+				{Employee e = new Employee();
 				e.setEmpId(rs.getInt("id"));
 				e.setEmpName(rs.getString("name"));
-				e.setEmpId(rs.getInt("id"));
+				e.setAge(rs.getInt("age"));
 				e.setDept( rs.getString("department"));
 				e.setDesig( rs.getString("designation"));
 				e.setSalary(Integer.parseInt(rs.getString("country")));
-				empMap1.put(e.getEmpId(),e);
+				eList.add(e);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			return empMap1;
+			return eList;
 		}
 		
+		public void updateEmpDb(int id) {
+			Employee e = new Employee();
+				System.out.println("Enter the Id");
+				e.setEmpId(sc.nextInt());
+				System.out.println("Enter the Name");
+				e.setEmpName(sc.next());
+				System.out.println("Enter the Age");
+				e.setAge(sc.nextInt());
+				System.out.println("Enter the Designation");
+				e.setDesig(sc.next());
+				System.out.println("Enter the Department");
+				e.setDept(sc.next());
+				System.out.println("Enter the Salary");
+				e.setSalary(sc.nextInt());
+				
+				try{String updateQuery = "UPDATE employee SET name = ?, age = ?, designation = ?, department = ?, country=? WHERE id = ?";
+				System.out.println("entered database update section");
+				pstmt = conn.prepareStatement(updateQuery);
+				pstmt.setString(1, e.getEmpName());
+				pstmt.setInt(2, e.getAge());
+				pstmt.setString(3, e.getDesig());
+				pstmt.setString(4, e.getDept());
+				pstmt.setString(5, Integer.toString(e.getSalary()));
+				pstmt.setInt(6, id);
+				int deleteCount= pstmt.executeUpdate();
+				pstmt.close();
+				System.out.println("Updated Successfully");
+				conn.commit();
+				}catch(SQLException k) {
+					k.printStackTrace();
+				}
+		}
 }

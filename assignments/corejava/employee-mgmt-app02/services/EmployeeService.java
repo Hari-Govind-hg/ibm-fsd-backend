@@ -33,26 +33,7 @@ public class EmployeeService{
 
 	public void updateEmp(int id)
 	{
-		Employee e = new Employee();
-		e=empMap.get(id);
-		if(empMap.containsKey(id)) {
-			System.out.println("Enter the Id");
-			e.setEmpId(sc.nextInt());
-			System.out.println("Enter the Name");
-			e.setEmpName(sc.next());
-			System.out.println("Enter the Age");
-			e.setAge(sc.nextInt());
-			System.out.println("Enter the Designation");
-			e.setDesig(sc.next());
-			System.out.println("Enter the Department");
-			e.setDept(sc.next());
-			System.out.println("Enter the Salary");
-			e.setSalary(sc.nextInt());
-			System.out.println("Updated Successfully");
-		}
-		else {
-			System.out.println("Employee record not found");
-		}
+		dao.updateEmpDb(id);
 	}
 	
 	
@@ -64,9 +45,10 @@ public class EmployeeService{
 	
 	
 	public void viewAllEmp(){
-		empMap = dao.viewAllEmpDb();
+		List<Employee> eList = new ArrayList<Employee>();
+		eList = dao.viewAllEmpDb();
 		if(empMap!=null) {
-			for(Employee e:empMap.values()) {
+			for(Employee e:eList) {
 			e.printDetails();
 		}
 		}
@@ -100,9 +82,10 @@ public class EmployeeService{
 	
 	public void exportEmp() {
 		try {
-			FileOutputStream fileOut = new FileOutputStream("C:\\\\Users\\\\HariGovind\\\\Desktop\\\\FSD-Saravana\\\\Personal Progress\\\\Assignments\\\\src\\\\com\\\\Java\\\\Assignment1\\\\Services\\\\empexp.txt");
-			empMap = dao.viewAllEmpDb();
-			for(Employee e:empMap.values()) {
+			FileOutputStream fileOut = new FileOutputStream("C:\\\\Users\\\\HariGovind\\\\Desktop\\\\FSD-Saravana\\\\Personal Progress\\\\Assignments\\\\src\\\\com\\\\Java\\\\Assignment1_jdbc\\\\services\\\\empexp.txt");
+			List<Employee> eList = new ArrayList<Employee>();
+			eList = dao.viewAllEmpDb();
+			for(Employee e:eList) {
 				try {
 					String objlist = String.format("%d,%s,%d,%s,%s,%d", e.getEmpId(),e.getEmpName(),e.getAge(),e.getDesig(),e.getDept(),e.getSalary());
 					System.out.println(objlist);
