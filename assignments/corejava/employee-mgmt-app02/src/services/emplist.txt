@@ -1,0 +1,6 @@
+1,Hari,22,FSD,IBM,120000
+2,Athul,21,ETLT,IBM,20000
+3,Nakul,22,Robotics,IBM,130000
+4,Arjun,23,Oracle,IBM,125000
+5,Sruthy,22,Java,IBM,1000
+6,Nair,23,SAP,IBM,12000
