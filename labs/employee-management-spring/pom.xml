@@ -6,7 +6,7 @@
   <name>employee-management-spring</name>
 	<description>Employee Management Spring Maven</description>
   <properties>
-	<org.springframework-version>5.1.9.RELEASE</org.springframework-version>
+	<org.springframework-version>5.3.19</org.springframework-version>
 	</properties>
 	<!-- Dependencies -->
 	<dependencies>
